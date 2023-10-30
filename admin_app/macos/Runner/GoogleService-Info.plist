@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDiwRyd-9vbB5ChT4Benlo53SwhHMj-MOQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>437349211477</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.adminApp.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>manga-s-verse</string>
+	<key>STORAGE_BUCKET</key>
+	<string>manga-s-verse.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:437349211477:ios:c40657cecfaa086e44a3dc</string>
+</dict>
+</plist>

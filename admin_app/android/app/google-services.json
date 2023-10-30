@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "437349211477",
+    "project_id": "manga-s-verse",
+    "storage_bucket": "manga-s-verse.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:437349211477:android:cc0fc82521a30e9444a3dc",
+        "android_client_info": {
+          "package_name": "com.example.admin_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMEzlG6M5bg7IpZMI7LEMB9iV4rdWe44U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
