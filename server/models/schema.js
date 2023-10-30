@@ -33,6 +33,11 @@ const user = new mongoose.Schema(
 			required: true,
 			type: String,
 		},
+		userId: {
+			required: true,
+			type: String,
+			unique: true,
+		},
 	},
 	{ timestamps: true }
 );
