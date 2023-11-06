@@ -263,8 +263,10 @@ class _LoginState extends State<Login> {
         });
       } on FirebaseAuthException catch (e) {
         Utils().showToast(e.toString());
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
 }
-

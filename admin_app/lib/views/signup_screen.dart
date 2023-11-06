@@ -28,9 +28,9 @@ class _SignupState extends State<Signup> {
   final btn2Node = FocusNode();
   final checkNode = FocusNode();
   Map<String, String> _user = {
-    'name': '',
     'password': '',
     'email': '',
+    'name': '',
   };
   final TextStyle txtStyle = const TextStyle(
     fontWeight: FontWeight.w800,
@@ -196,7 +196,7 @@ class _SignupState extends State<Signup> {
                             },
                             onSave: (v) {
                               _user = {
-                                '': _user['name'].toString(),
+                                'name': _user['name'].toString(),
                                 'password': v.toString(),
                                 'email': _user['email'].toString(),
                               };
@@ -284,15 +284,17 @@ class _SignupState extends State<Signup> {
           isLoading = true;
         });
         _key.currentState!.save();
-
-        await firebaseProvider.signup(_user);
-
+        await firebaseProvider.signup(
+            _user['name'].toString(), _user['password']!, _user['email']!);
         Utils().showToast('Successfully register');
         setState(() {
           isLoading = false;
         });
       } on FirebaseAuthException catch (e) {
         Utils().showToast(e.toString());
+        setState(() {
+          isLoading = false;
+        });
       }
     }
   }
