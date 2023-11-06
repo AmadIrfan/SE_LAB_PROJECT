@@ -3,10 +3,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class Utils {
   void showToast(message) async {
-    FToast().showToast(
-      child: Text(
-        message,
-      ),
+    Fluttertoast.cancel();
+    Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      // backgroundColor: ,
+      textColor: Colors.white,
+      fontSize: 16,
+      timeInSecForIosWeb: 2,
     );
   }
 }

@@ -23,7 +23,7 @@
 		"nodemon": "^3.0.1"
 	},
 	"main": "index.js",
-	"author": "",
+	"author": "Amad Irfan",
 	"license": "ISC",
 	"description": ""
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:admin_app/res/routes/route_name.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,12 +12,18 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   void initState() {
     Timer(
       const Duration(seconds: 3),
       () {
-        Navigator.pushReplacementNamed(context, RouteName.start);
+        if (_auth.currentUser == null) {
+          Navigator.pushReplacementNamed(context, RouteName.start);
+        } else {
+          Navigator.pushReplacementNamed(context, RouteName.home);
+        }
       },
     );
     super.initState();

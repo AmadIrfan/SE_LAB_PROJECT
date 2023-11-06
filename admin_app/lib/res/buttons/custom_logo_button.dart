@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class CustomLogoButton extends StatelessWidget {
+  const CustomLogoButton({
     super.key,
+    required this.logo,
     required this.text,
-    required this.onClick,
     this.focusNode,
-    this.isLoading = false,
+    required this.onClick,
   });
-
+  final Widget logo;
   final String text;
-  final bool isLoading;
-  final FocusNode? focusNode;
   final Function onClick;
+  final FocusNode? focusNode;
   @override
   Widget build(BuildContext context) {
-    // print(isLoading);
     return Container(
       width: double.infinity,
-      height: 57,
+      height: 55,
+      alignment: Alignment.center,
       padding: const EdgeInsets.symmetric(
         vertical: 2,
         horizontal: 20,
@@ -39,19 +38,24 @@ class CustomButton extends StatelessWidget {
               borderRadius: BorderRadius.circular(25),
             ),
           ),
-          child: isLoading
-              ? const Center(
-                  child: CircularProgressIndicator(),
-                )
-              : Text(
-                  text,
-                  style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w600,
-                  ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              logo,
+              const SizedBox(
+                width: 5,
+              ),
+              Text(
+                text,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 20,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w700,
                 ),
+              ),
+            ],
+          ),
         ),
       ),
     );

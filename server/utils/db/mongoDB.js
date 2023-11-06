@@ -1,22 +1,18 @@
-const mongo = require("mongoose");
+const mongoose = require("mongoose");
+require("dotenv").config();
+mongoose.set("strictQuery", true);
 
-mongo.set("strictQuery", false);
-
-const url = process.env.DATA_BASE_URL;
-
-mongo.connect(url, {
+const url = process.env.MONGO_URL;
+mongoose.connect(url, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
 
-let db = mongo.connection;
+const db = mongoose.connection;
 
-db.on("error", () => {
-	console.log("error db not connected");
+db.on("error", (err) => {
+	console.log("ERROR --> ", err.message);
 });
-
-db.once("open", (_) => {
-	console.log("db connected");
-});
-
-module.exports = db;
+db.once("open", () => {
+	console.log("connected with db");
+});  

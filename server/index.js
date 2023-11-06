@@ -22,6 +22,6 @@ app.get("/", (req, res) => {
 	res.send("this is server");
 });
 
-app.listen(3000, () => {
+app.listen(process.env.PORT, () => {
 	console.log("server is running");
 });

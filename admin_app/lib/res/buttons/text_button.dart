@@ -15,7 +15,7 @@ class CustomTextButton extends StatelessWidget {
           color: Colors.black,
           fontSize: 20,
           fontFamily: 'Inter',
-          fontWeight: FontWeight.w800,
+          fontWeight: FontWeight.w700,
           height: 0,
         ),
       ),

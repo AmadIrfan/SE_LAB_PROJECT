@@ -1,9 +1,11 @@
+import 'package:admin_app/views/login_screen.dart';
+import 'package:admin_app/views/signup_screen.dart';
 import 'package:admin_app/views/splash_screen.dart';
 import 'package:admin_app/views/start_screen.dart';
 import 'package:flutter/material.dart';
 
 import '../routes/route_name.dart';
-import '../../views/home_page.dart';
+import '../../views/home_screen.dart';
 
 class MyRoute {
   static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -19,6 +21,14 @@ class MyRoute {
       case RouteName.start:
         return MaterialPageRoute(
           builder: (context) => const StartScreen(),
+        );
+      case RouteName.signup:
+        return MaterialPageRoute(
+          builder: (context) => const Signup(),
+        );
+      case RouteName.login:
+        return MaterialPageRoute(
+          builder: (context) => const Login(),
         );
 
       default:

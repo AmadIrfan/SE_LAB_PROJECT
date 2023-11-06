@@ -1,4 +1,5 @@
 import 'package:admin_app/res/buttons/custom_button.dart';
+import 'package:admin_app/res/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -80,7 +81,14 @@ class StartScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              CustomButton(text: 'Sign up', onClick: () {}),
+              CustomButton(
+                  text: 'Sign up',
+                  onClick: () {
+                    Navigator.pushNamed(
+                      context,
+                      RouteName.signup,
+                    );
+                  }),
               const SizedBox(
                 height: 10,
               ),
@@ -102,7 +110,9 @@ class StartScreen extends StatelessWidget {
                   ),
                   CustomTextButton(
                     text: 'Login',
-                    onClick: () {},
+                    onClick: () {
+                      Navigator.pushReplacementNamed(context, RouteName.login);
+                    },
                   ),
                 ],
               ),
