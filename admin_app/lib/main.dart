@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import "package:provider/provider.dart";
 import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-import 'package:admin_app/res/colors.dart';
+import '../res/colors.dart';
 import '../res/routes/route_name.dart';
 import '../data/firebase_methods.dart';
 import '../res/routes/route.dart';
-import 'firebase_options.dart';
+import '../data/provider/user_provider.dart';
 
 // import '../windows/splash_screen.dart';
 
@@ -19,17 +20,18 @@ void main() async {
   runApp(const MyApp());
 }
 
-// App starting point MY-APP
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // building professional app look
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (context) => FireBaseMethods(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => UserProvider(),
         ),
       ],
       child: MaterialApp(

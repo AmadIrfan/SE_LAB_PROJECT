@@ -41,4 +41,11 @@ class FireBaseMethods with ChangeNotifier {
       rethrow;
     }
   }
+
+  Future<UserModel> getUserData() async {
+    User? user = _auth.currentUser;
+    DocumentSnapshot doc =
+        await _firestore.collection('admin').doc(user!.uid).get();
+    return UserModel.fromMap(doc.data() as Map<String, dynamic>);
+  }
 }

@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
   String? id;
@@ -48,10 +50,10 @@ class UserModel {
       isSuperAdmin:
           map['isSuperAdmin'] != null ? map['isSuperAdmin'] as bool : null,
       createDate: map['createDate'] != null
-          ? DateTime.parse(map['createDate'].toString())
+          ? (map['createDate'] as Timestamp).toDate()
           : DateTime.now(),
       updateDate: map['updateDate'] != null
-          ? DateTime.parse(map['updateDate'].toString())
+          ? (map['updateDate'] as Timestamp).toDate()
           : DateTime.now(),
       profileImage:
           map['profileImage'] != null ? map['profileImage'] as String : null,

@@ -1,44 +1,36 @@
 import mongoose from "mongoose";
 
-const user = new mongoose.Schema(
+const author = new mongoose.Schema(
 	{
 		name: {
 			type: String,
 			required: true,
 		},
-		email: {
-			type: String,
-			required: true,
-			unique: true,
-		},
-		// password: {
-		// 	type: String,
-		// 	required: true,
-		// },
-		phone: {
+		Email: {
 			type: String,
 			required: true,
 		},
-		isSupperAdmin: {
-			default: false,
+		gender: {
+			type: String,
 			required: true,
+			enum: ["male", "female"],
+		},
+		Novel: {
+			type: Array,
+			required: true,
+		},
+		Active: {
 			type: Boolean,
-		},
-		active: {
+			required: true,
 			default: true,
-			required: true,
-			type: Boolean,
 		},
-		profileImage: {
+		dob: {
+			type: Date,
 			required: true,
-			type: String,
-		},
-		userId: {
-			required: true,
-			type: String,
-			unique: true,
 		},
 	},
 	{ timestamps: true }
 );
-module.exports = mongoose.Schema("user", user);
+
+const authorModel = mongoose.model("authors", author);
+module.exports = { authorModel };
