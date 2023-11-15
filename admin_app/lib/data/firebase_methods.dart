@@ -48,4 +48,8 @@ class FireBaseMethods with ChangeNotifier {
         await _firestore.collection('admin').doc(user!.uid).get();
     return UserModel.fromMap(doc.data() as Map<String, dynamic>);
   }
+
+  // Stream<DocumentSnapshot<Map<String, dynamic>>> getMultiUserData() {
+  //   return 
+  // }
 }

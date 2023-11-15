@@ -1,7 +1,9 @@
+import 'package:admin_app/res/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../res/colors.dart';
 import 'package:gap/gap.dart';
+
+import '../res/colors.dart';
 import '../res/list_tile.dart';
 import '../data/provider/user_provider.dart';
 
@@ -75,11 +77,19 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
               const SizedBox(height: 8),
-              const AppListTile(title: 'Dashboard'),
-              const AppListTile(title: 'Books'),
-              const AppListTile(title: 'Users'),
-              const AppListTile(title: 'Publishers'),
-              const AppListTile(title: 'Staff Members'),
+              AppListTile(onTap: () {}, title: 'Dashboard'),
+              AppListTile(onTap: () {}, title: 'Books'),
+              AppListTile(
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteName.userManage);
+                  },
+                  title: 'Users'),
+              AppListTile(onTap: () {}, title: 'Publishers'),
+              AppListTile(
+                  onTap: () {
+                    Navigator.pushNamed(context, RouteName.staffManage);
+                  },
+                  title: 'Staff Members'),
               const Spacer(),
               Container(
                 width: 265,
