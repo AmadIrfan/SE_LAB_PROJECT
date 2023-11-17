@@ -14,9 +14,9 @@ class StaffManage extends StatefulWidget {
 class _StaffManageState extends State<StaffManage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Map<String, double> dataMap = {
-    "Flutter": 5,
-    "React": 3,
-    "Ionic": 2,
+    "Total": 5,
+    "active": 3,
+    "inactive": 2,
   };
   @override
   Widget build(BuildContext context) {
@@ -87,27 +87,8 @@ class _StaffManageState extends State<StaffManage> {
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (BuildContext context, int index) {
-                        UserModel u = UserModel(
-                          id: (snapshot.data!.docs[index]['id']).toString(),
-                          email:
-                              (snapshot.data!.docs[index]['email']).toString(),
-                          isSuperAdmin: bool.parse((snapshot.data!.docs[index]
-                                  ['isSuperAdmin'])
-                              .toString()),
-                          profileImage: (snapshot.data!.docs[index]
-                                  ['profileImage'])
-                              .toString(),
-                          active: bool.parse((snapshot.data!.docs[index]
-                                  ['active'])
-                              .toString()),
-                          phone:
-                              (snapshot.data!.docs[index]['phone']).toString(),
-                          name: (snapshot.data!.docs[index]['name']).toString(),
-                          createDate: DateTime.parse(snapshot.data!.docs[index]
-                              ['createDate'] as String),
-                          updateDate: DateTime.parse(snapshot.data!.docs[index]
-                              ['updateDate'] as String),
-                          role: (snapshot.data!.docs[index]['role']).toString(),
+                        UserModel u = UserModel.fromMap(
+                          snapshot.data!.docs[index].data(),
                         );
                         return ADminCards(
                           userModel: u,

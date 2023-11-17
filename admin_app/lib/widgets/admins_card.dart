@@ -6,14 +6,11 @@ import 'package:provider/provider.dart';
 
 class ADminCards extends StatelessWidget {
   const ADminCards({super.key, required this.userModel});
-
   final UserModel userModel;
-
   @override
   Widget build(BuildContext context) {
-    UserProvider um = Provider.of<UserProvider>(context, listen: false);
+    UserProvider um = Provider.of<UserProvider>(context);
     um.refreshUser();
-
     UserModel? u = um.getUser;
     return Card(
       color: const Color(0xFFD9D9D9),

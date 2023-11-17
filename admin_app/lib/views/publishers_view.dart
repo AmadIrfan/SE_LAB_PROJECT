@@ -16,9 +16,9 @@ class PublisherManage extends StatefulWidget {
 class _PublisherManageState extends State<PublisherManage> {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   Map<String, double> dataMap = {
-    "Flutter": 5,
-    "React": 3,
-    "Ionic": 2,
+    "Total": 5,
+    "active": 3,
+    "inactive": 2,
   };
 
   @override
