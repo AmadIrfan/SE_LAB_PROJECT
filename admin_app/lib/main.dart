@@ -38,6 +38,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Managa\'s verse',
         theme: ThemeData(
+          iconTheme: const IconThemeData(color: Colors.white),
           fontFamily: fontFamily,
           buttonTheme: const ButtonThemeData(
             buttonColor: darkBlueColor,

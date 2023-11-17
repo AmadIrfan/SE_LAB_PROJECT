@@ -1,4 +1,6 @@
+import 'package:admin_app/views/add_publisher.dart';
 import 'package:admin_app/views/login_screen.dart';
+import 'package:admin_app/views/publishers_view.dart';
 import 'package:admin_app/views/signup_screen.dart';
 import 'package:admin_app/views/splash_screen.dart';
 import 'package:admin_app/views/staff_manage.dart';
@@ -36,9 +38,17 @@ class MyRoute {
         return MaterialPageRoute(
           builder: (context) => const UserManage(),
         );
+      case RouteName.addPublisher:
+        return MaterialPageRoute(
+          builder: (context) => const AddPublisher(),
+        );
       case RouteName.staffManage:
         return MaterialPageRoute(
           builder: (context) => const StaffManage(),
+        );
+      case RouteName.publisherManage:
+        return MaterialPageRoute(
+          builder: (context) => const PublisherManage(),
         );
 
       default:

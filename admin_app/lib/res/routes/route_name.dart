@@ -5,5 +5,7 @@ class RouteName {
   static const String login = '/login';
   static const String signup = '/signup';
   static const String userManage = '/userName';
+  static const String publisherManage = '/publisherManage';
+  static const String addPublisher = '/addPublisher';
   static const String staffManage = '/staffName';
 }

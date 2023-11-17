@@ -7,7 +7,9 @@ class UserProvider extends ChangeNotifier {
   UserModel? get getUser => _user;
 
   Future<void> refreshUser() async {
+
     UserModel user = await FireBaseMethods().getUserData();
+    
     _user = user;
     notifyListeners();
   }

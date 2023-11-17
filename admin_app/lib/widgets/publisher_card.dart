@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:admin_app/models/user_model.dart';
 
-class UserCard extends StatelessWidget {
-  const UserCard({super.key, required this.userModel});
+import '../models/publisher_model.dart';
 
-  final UserModel userModel;
+
+class PublisherCard extends StatelessWidget {
+  const PublisherCard({super.key, required this.pModel});
+
+  final Publisher pModel;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -13,14 +15,14 @@ class UserCard extends StatelessWidget {
         leading: CircleAvatar(
           radius: 30,
           backgroundColor: const Color(0xFFFFD88D),
-          child: userModel.profileImage.toString().isEmpty
+          child: pModel.profileImage.toString().isEmpty
               ? const SizedBox()
               : Image.network(
-                  userModel.profileImage.toString(),
+                  pModel.profileImage.toString(),
                 ),
         ),
         title: Text(
-          userModel.name.toString(),
+          pModel.name.toString(),
           style: const TextStyle(
             color: Color(0xFF171B36),
             fontSize: 20,
@@ -30,7 +32,7 @@ class UserCard extends StatelessWidget {
           ),
         ),
         subtitle: Text(
-          userModel.email.toString(),
+          pModel.email.toString(),
           style: const TextStyle(
             color: Color(0xFF171B36),
             fontSize: 12,
@@ -39,20 +41,16 @@ class UserCard extends StatelessWidget {
             fontFamily: 'Inter',
           ),
         ),
-        trailing: bool.parse(
-          userModel.isSuperAdmin.toString(),
-        )
-            ? PopupMenuButton(
-                itemBuilder: (context) => [
-                  const PopupMenuItem(
-                    child: Text('edit'),
-                  ),
-                  const PopupMenuItem(
-                    child: Text('In Active'),
-                  ),
-                ],
-              )
-            : const SizedBox(),
+        trailing: PopupMenuButton(
+          itemBuilder: (context) => [
+            const PopupMenuItem(
+              child: Text('edit'),
+            ),
+            const PopupMenuItem(
+              child: Text('In Active'),
+            ),
+          ],
+        ),
       ),
     );
   }

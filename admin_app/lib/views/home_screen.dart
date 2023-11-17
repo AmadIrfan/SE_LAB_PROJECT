@@ -15,7 +15,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  List<Map<String, String>> _data = [
+  final List<Map<String, String>> _data = [
     {
       'name': 'User',
       'icon': 'assets/images/PhUsersDuotone.svg',
@@ -34,7 +34,7 @@ class _MyHomePageState extends State<MyHomePage> {
     {
       'name': 'Publishers',
       'icon': 'assets/images/PhUsersDuotone.svg',
-      'page': RouteName.userManage,
+      'page': RouteName.publisherManage,
     },
   ];
 
@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     UserProvider up = Provider.of<UserProvider>(context, listen: false);
     up.refreshUser();
-    
+
     return Scaffold(
       drawer: const MyDrawer(),
       appBar: AppBar(

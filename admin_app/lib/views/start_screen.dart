@@ -1,8 +1,8 @@
-import 'package:admin_app/res/buttons/custom_button.dart';
-import 'package:admin_app/res/routes/route_name.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../res/buttons/custom_button.dart';
+import '../res/routes/route_name.dart';
 import '../res/buttons/text_button.dart';
 
 class StartScreen extends StatelessWidget {
@@ -111,7 +111,10 @@ class StartScreen extends StatelessWidget {
                   CustomTextButton(
                     text: 'Login',
                     onClick: () {
-                      Navigator.pushReplacementNamed(context, RouteName.login);
+                      Navigator.pushReplacementNamed(
+                        context,
+                        RouteName.login,
+                      );
                     },
                   ),
                 ],
