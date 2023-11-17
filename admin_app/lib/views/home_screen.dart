@@ -24,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
     {
       'name': 'Books',
       'icon': 'assets/images/Group.svg',
-      'page': RouteName.userManage,
+      'page': RouteName.books,
     },
     {
       'name': 'Staff Member',

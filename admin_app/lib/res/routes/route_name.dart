@@ -7,5 +7,8 @@ class RouteName {
   static const String userManage = '/userName';
   static const String publisherManage = '/publisherManage';
   static const String addPublisher = '/addPublisher';
-  static const String staffManage = '/staffName';
+  static const String viewDetailed = '/viewDetailed';
+  static const String publisherView = '/PublisherViewDetails';
+  static const String staffManage = '/staffManage';
+  static const String books = '/books';
 }

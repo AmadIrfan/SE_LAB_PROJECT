@@ -77,14 +77,27 @@ class _MyDrawerState extends State<MyDrawer> {
                 ),
               ),
               const SizedBox(height: 8),
-              AppListTile(onTap: () {}, title: 'Dashboard'),
-              AppListTile(onTap: () {}, title: 'Books'),
+              AppListTile(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, RouteName.home);
+                  },
+                  title: 'Dashboard'),
+              AppListTile(
+                  onTap: () {
+                    Navigator.pushReplacementNamed(context, RouteName.books);
+                  },
+                  title: 'Books'),
               AppListTile(
                   onTap: () {
                     Navigator.pushNamed(context, RouteName.userManage);
                   },
                   title: 'Users'),
-              AppListTile(onTap: () {}, title: 'Publishers'),
+              AppListTile(
+                onTap: () {
+                  Navigator.pushNamed(context, RouteName.publisherManage);
+                },
+                title: 'Publishers',
+              ),
               AppListTile(
                   onTap: () {
                     Navigator.pushNamed(context, RouteName.staffManage);
@@ -162,9 +175,11 @@ class _MyDrawerState extends State<MyDrawer> {
                         ),
                         child: InkWell(
                           onTap: () {
-                            setState(() {
-                              index = 1;
-                            });
+                            setState(
+                              () {
+                                index = 1;
+                              },
+                            );
                           },
                           child: const Row(
                             mainAxisAlignment: MainAxisAlignment.center,

@@ -1,17 +1,25 @@
+import 'package:admin_app/res/routes/route_name.dart';
 import 'package:flutter/material.dart';
 
 import '../models/publisher_model.dart';
-
 
 class PublisherCard extends StatelessWidget {
   const PublisherCard({super.key, required this.pModel});
 
   final Publisher pModel;
+
   @override
   Widget build(BuildContext context) {
     return Card(
       color: const Color(0xFFD9D9D9),
       child: ListTile(
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            RouteName.publisherView,
+            arguments: pModel,
+          );
+        },
         leading: CircleAvatar(
           radius: 30,
           backgroundColor: const Color(0xFFFFD88D),

@@ -19,9 +19,9 @@ class PIChart extends StatelessWidget {
     return Expanded(
       child: Column(
         children: [
-          const Text(
-            'Statistics',
-            style: TextStyle(
+          Text(
+            chartName!,
+            style: const TextStyle(
               color: Color(0xFF243465),
               fontSize: 20,
               fontFamily: 'Nunito Sans',
@@ -30,30 +30,32 @@ class PIChart extends StatelessWidget {
               letterSpacing: 0.28,
             ),
           ),
-          PieChart(
-            dataMap: data,
-            animationDuration: const Duration(milliseconds: 800),
-            chartLegendSpacing: 32,
-            chartRadius: MediaQuery.sizeOf(context).width / 2.2,
-            colorList: colors!,
-            initialAngleInDegree: 0,
-            chartType: ChartType.ring,
-            ringStrokeWidth: 30,
-            legendOptions: const LegendOptions(
-              showLegendsInRow: true,
-              legendPosition: LegendPosition.bottom,
-              showLegends: true,
-              legendShape: BoxShape.circle,
-              legendTextStyle: TextStyle(
-                fontWeight: FontWeight.bold,
+          Expanded(
+            child: PieChart(
+              dataMap: data,
+              animationDuration: const Duration(milliseconds: 800),
+              chartLegendSpacing: 32,
+              chartRadius: MediaQuery.sizeOf(context).width / 2.2,
+              colorList: colors!,
+              initialAngleInDegree: 0,
+              chartType: ChartType.ring,
+              ringStrokeWidth: 30,
+              legendOptions: const LegendOptions(
+                showLegendsInRow: true,
+                legendPosition: LegendPosition.bottom,
+                showLegends: true,
+                legendShape: BoxShape.circle,
+                legendTextStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            chartValuesOptions: const ChartValuesOptions(
-              showChartValueBackground: true,
-              showChartValues: true,
-              showChartValuesInPercentage: false,
-              showChartValuesOutside: false,
-              decimalPlaces: 1,
+              chartValuesOptions: const ChartValuesOptions(
+                showChartValueBackground: true,
+                showChartValues: true,
+                showChartValuesInPercentage: false,
+                showChartValuesOutside: false,
+                decimalPlaces: 1,
+              ),
             ),
           ),
         ],

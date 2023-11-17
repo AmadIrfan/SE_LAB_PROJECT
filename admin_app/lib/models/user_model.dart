@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
@@ -20,8 +19,8 @@ class UserModel with ChangeNotifier {
     this.name,
     this.email,
     this.isSuperAdmin = false,
-    required this.createDate,
-    required this.updateDate,
+    this.createDate,
+    this.updateDate,
     this.profileImage,
     this.phone,
     required this.role,
@@ -34,8 +33,8 @@ class UserModel with ChangeNotifier {
       'name': name,
       'email': email,
       'isSuperAdmin': isSuperAdmin,
-      'createDate': DateTime.now(),
-      'updateDate': DateTime.now(),
+      'createDate': createDate.toString(),
+      'updateDate': updateDate.toString(),
       'profileImage': profileImage,
       'phone': phone,
       'role': role,
@@ -51,10 +50,10 @@ class UserModel with ChangeNotifier {
       isSuperAdmin:
           map['isSuperAdmin'] != null ? map['isSuperAdmin'] as bool : null,
       createDate: map['createDate'] != null
-          ? (map['createDate'] as Timestamp).toDate()
+          ? DateTime.parse(map['createDate'] as String)
           : DateTime.now(),
       updateDate: map['updateDate'] != null
-          ? (map['updateDate'] as Timestamp).toDate()
+          ? DateTime.parse(map['updateDate'] as String)
           : DateTime.now(),
       profileImage:
           map['profileImage'] != null ? map['profileImage'] as String : null,
@@ -65,7 +64,6 @@ class UserModel with ChangeNotifier {
   }
 
   String toJson() => json.encode(toMap());
-
   factory UserModel.fromJson(String source) =>
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 }

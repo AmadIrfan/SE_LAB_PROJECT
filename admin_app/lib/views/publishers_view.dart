@@ -1,4 +1,5 @@
 import 'package:admin_app/res/routes/route_name.dart';
+import 'package:admin_app/widgets/chart.dart';
 import 'package:admin_app/widgets/publisher_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -44,12 +45,15 @@ class _PublisherManageState extends State<PublisherManage> {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () async {},
+        onRefresh: () async {
+          setState(() {});
+        },
         child: Column(
           children: [
+            PIChart(chartName: 'Statistics', data: dataMap),
             Expanded(
               child: StreamBuilder(
-                stream: _firestore.collection('user').snapshots(),
+                stream: _firestore.collection('publisher').snapshots(),
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -60,43 +64,15 @@ class _PublisherManageState extends State<PublisherManage> {
                       return ListView.builder(
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (BuildContext context, int index) {
-                          Publisher u = Publisher(
-                            password: '',
-                            fatherName: (snapshot.data!.docs[index]
-                                    ['fatherName'])
-                                .toString(),
-                            gender: (snapshot.data!.docs[index]['gender'])
-                                .toString(),
-                            address: (snapshot.data!.docs[index]['address'])
-                                .toString(),
-                            bio: (snapshot.data!.docs[index]['bio']).toString(),
-                            id: (snapshot.data!.docs[index]['id']).toString(),
-                            email: (snapshot.data!.docs[index]['email'])
-                                .toString(),
-                            profileImage: (snapshot.data!.docs[index]
-                                    ['profileImage'])
-                                .toString(),
-                            active: bool.parse((snapshot.data!.docs[index]
-                                    ['active'])
-                                .toString()),
-                            phone: (snapshot.data!.docs[index]['phone'])
-                                .toString(),
-                            name:
-                                (snapshot.data!.docs[index]['name']).toString(),
-                            createDate: (snapshot.data!.docs[index]
-                                    ['createDate'] as Timestamp)
-                                .toDate(),
-                            updateDate: (snapshot.data!.docs[index]
-                                    ['updateDate'] as Timestamp)
-                                .toDate(),
+                          Publisher u = Publisher.fromMap(
+                            (snapshot.data!).docs[index].data(),
                           );
                           return PublisherCard(
                             pModel: u,
                           );
                         },
                       );
-                    }
-                     else {
+                    } else {
                       return const Center(
                         child: CircularProgressIndicator(),
                       );

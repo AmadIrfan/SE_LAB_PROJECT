@@ -1,8 +1,8 @@
+import 'package:admin_app/widgets/admins_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import '../models/user_model.dart';
-import '../widgets/user_card.dart';
 
 class StaffManage extends StatefulWidget {
   const StaffManage({super.key});
@@ -103,15 +103,13 @@ class _StaffManageState extends State<StaffManage> {
                           phone:
                               (snapshot.data!.docs[index]['phone']).toString(),
                           name: (snapshot.data!.docs[index]['name']).toString(),
-                          createDate: (snapshot.data!.docs[index]['createDate']
-                                  as Timestamp)
-                              .toDate(),
-                          updateDate: (snapshot.data!.docs[index]['updateDate']
-                                  as Timestamp)
-                              .toDate(),
+                          createDate: DateTime.parse(snapshot.data!.docs[index]
+                              ['createDate'] as String),
+                          updateDate: DateTime.parse(snapshot.data!.docs[index]
+                              ['updateDate'] as String),
                           role: (snapshot.data!.docs[index]['role']).toString(),
                         );
-                        return UserCard(
+                        return ADminCards(
                           userModel: u,
                         );
                       },

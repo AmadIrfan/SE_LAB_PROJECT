@@ -46,9 +46,9 @@ dependencies:
   intl: ^0.18.1
   pie_chart: ^5.4.0
   provider: ^6.0.5
+  random_password_generator: ^0.2.1
   shared_preferences: ^2.2.2
   uuid: any
-  random_password_generator: ^0.2.1
 
 dev_dependencies:
   flutter_lints: ^2.0.0
