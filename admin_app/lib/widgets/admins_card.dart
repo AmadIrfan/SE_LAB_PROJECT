@@ -4,11 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:admin_app/models/user_model.dart';
 import 'package:provider/provider.dart';
 
+import '../data/firebase_methods.dart';
+import '../utils/utils.dart';
+
 class ADminCards extends StatelessWidget {
   const ADminCards({super.key, required this.userModel});
   final UserModel userModel;
   @override
   Widget build(BuildContext context) {
+    final updateStatus = Provider.of<FireBaseMethods>(context, listen: false);
     UserProvider um = Provider.of<UserProvider>(context);
     um.refreshUser();
     UserModel? u = um.getUser;
@@ -56,14 +60,24 @@ class ADminCards extends StatelessWidget {
         )
             ? PopupMenuButton(
                 itemBuilder: (context) => [
-                  const PopupMenuItem(
-                    child: Text('edit'),
-                  ),
-                  const PopupMenuItem(
-                    child: Text('In Active'),
-                  ),
-                ],
-              )
+                      PopupMenuItem(
+                        child: Text(bool.parse(userModel.active.toString())
+                            ? 'In Active'
+                            : 'Active'),
+                        onTap: () async {
+                          await updateStatus.updateStatusActive(
+                              'admin',
+                              bool.parse(
+                                userModel.active.toString(),
+                              ),
+                              userModel.id.toString());
+                          Utils().showToast(
+                              bool.parse(userModel.active.toString())
+                                  ? 'admin InActivate'
+                                  : 'admin Activate');
+                        },
+                      )
+                    ])
             : const SizedBox(),
       ),
     );

@@ -1,3 +1,4 @@
+import 'package:admin_app/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -19,7 +20,10 @@ class _UserManageState extends State<UserManage> {
     "active": 3,
     "inactive": 2,
   };
+  String? filter = 'all';
 
+  Stream<QuerySnapshot<Map<String, dynamic>>> collection =
+      FirebaseFirestore.instance.collection('user').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,10 +39,60 @@ class _UserManageState extends State<UserManage> {
         },
         child: Column(
           children: [
+            Container(
+              color: darkBlueColor.withOpacity(0.3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FilterChip(
+                    selected: filter == 'all' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection = _firestore.collection('user').snapshots();
+                      });
+                      filter = 'all';
+                    },
+                    label: const Text('All'),
+                  ),
+                  FilterChip(
+                    selected: filter == 'active' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection = _firestore
+                            .collection('user')
+                            .where(
+                              'active',
+                              isEqualTo: true,
+                            )
+                            .snapshots();
+                      });
+                      filter = 'active';
+                    },
+                    label: const Text('Active'),
+                  ),
+                  FilterChip(
+                    selected: filter == 'inActive' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection = _firestore
+                            .collection('user')
+                            .where(
+                              'active',
+                              isEqualTo: false,
+                            )
+                            .snapshots();
+                      });
+                      filter = 'inActive';
+                    },
+                    label: const Text('In Active'),
+                  ),
+                ],
+              ),
+            ),
             PIChart(chartName: 'Statistics', data: dataMap),
             Expanded(
               child: StreamBuilder(
-                stream: _firestore.collection('user').snapshots(),
+                stream: collection,
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -46,35 +100,16 @@ class _UserManageState extends State<UserManage> {
                     );
                   } else {
                     if (snapshot.hasData) {
+                      if (snapshot.data!.docs.isEmpty) {
+                        return const Center(
+                          child: Text('No document Found'),
+                        );
+                      }
                       return ListView.builder(
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (BuildContext context, int index) {
                           UserModel u = UserModel.fromMap(
                               snapshot.data!.docs[index].data());
-                          //  UserModel(
-                          //   id: (snapshot.data!.docs[index]['id']).toString(),
-                          //   email: (snapshot.data!.docs[index]['email'])
-                          //       .toString(),
-                          //   isSuperAdmin: bool.parse((snapshot.data!.docs[index]
-                          //           ['isSuperAdmin'])
-                          //       .toString()),
-                          //   profileImage: (snapshot.data!.docs[index]
-                          //           ['profileImage'])
-                          //       .toString(),
-                          //   active: bool.parse((snapshot.data!.docs[index]
-                          //           ['active'])
-                          //       .toString()),
-                          //   phone: (snapshot.data!.docs[index]['phone'])
-                          //       .toString(),
-                          //   name:
-                          //       (snapshot.data!.docs[index]['name']).toString(),
-                          //   createDate: DateTime.parse(snapshot
-                          //       .data!.docs[index]['createDate'] as String),
-                          //   updateDate: DateTime.parse(snapshot
-                          //       .data!.docs[index]['updateDate'] as String),
-                          //   role:
-                          //       (snapshot.data!.docs[index]['role']).toString(),
-                          // );
                           return UserCard(
                             userModel: u,
                           );
@@ -95,3 +130,12 @@ class _UserManageState extends State<UserManage> {
     );
   }
 }
+                    // color: MaterialStateProperty.resolveWith<Color?>(
+                    //   (Set<MaterialState> states) {
+                    //     if (states.contains(MaterialState.pressed)) {
+                    //       return Colors.red; // Color when the button is pressed
+                    //     }
+                    //     return Colors.blue; // Default color
+                    //   },
+                    // ),
+                    // backgroundColor: darkBlueColor,

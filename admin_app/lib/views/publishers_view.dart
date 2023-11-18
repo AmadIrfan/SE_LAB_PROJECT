@@ -1,3 +1,4 @@
+import 'package:admin_app/res/colors.dart';
 import 'package:admin_app/res/routes/route_name.dart';
 import 'package:admin_app/widgets/chart.dart';
 import 'package:admin_app/widgets/publisher_card.dart';
@@ -20,6 +21,10 @@ class _PublisherManageState extends State<PublisherManage> {
     "active": 3,
     "inactive": 2,
   };
+  String? filter = 'all';
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> collection =
+      FirebaseFirestore.instance.collection('publisher').snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -50,10 +55,61 @@ class _PublisherManageState extends State<PublisherManage> {
         },
         child: Column(
           children: [
+            Container(
+              color: darkBlueColor.withOpacity(0.3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FilterChip(
+                    selected: filter == 'all' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection =
+                            _firestore.collection('publisher').snapshots();
+                      });
+                      filter = 'all';
+                    },
+                    label: const Text('All'),
+                  ),
+                  FilterChip(
+                    selected: filter == 'active' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection = _firestore
+                            .collection('publisher')
+                            .where(
+                              'active',
+                              isEqualTo: true,
+                            )
+                            .snapshots();
+                      });
+                      filter = 'active';
+                    },
+                    label: const Text('Active'),
+                  ),
+                  FilterChip(
+                    selected: filter == 'inActive' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection = _firestore
+                            .collection('publisher')
+                            .where(
+                              'active',
+                              isEqualTo: false,
+                            )
+                            .snapshots();
+                      });
+                      filter = 'inActive';
+                    },
+                    label: const Text('In Active'),
+                  ),
+                ],
+              ),
+            ),
             PIChart(chartName: 'Statistics', data: dataMap),
             Expanded(
               child: StreamBuilder(
-                stream: _firestore.collection('publisher').snapshots(),
+                stream: collection,
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
@@ -61,6 +117,12 @@ class _PublisherManageState extends State<PublisherManage> {
                     );
                   } else {
                     if (snapshot.hasData) {
+                      if (snapshot.data!.docs.isEmpty) {
+                        return const Center(
+                          child: Text('No document Found'),
+                        );
+                      }
+
                       return ListView.builder(
                         itemCount: snapshot.data!.docs.length,
                         itemBuilder: (BuildContext context, int index) {

@@ -1,3 +1,4 @@
+import 'package:admin_app/views/foget_password.dart';
 import 'package:flutter/material.dart';
 
 import '../../views/add_publisher.dart';
@@ -67,6 +68,11 @@ class MyRoute {
         return MaterialPageRoute(
           settings: settings,
           builder: (context) => const StaffManage(),
+        );
+      case RouteName.forgetPassword:
+        return MaterialPageRoute(
+          settings: settings,
+          builder: (context) => const ForgotPassword(),
         );
       case RouteName.publisherManage:
         return MaterialPageRoute(

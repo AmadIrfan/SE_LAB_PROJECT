@@ -10,5 +10,6 @@ class RouteName {
   static const String viewDetailed = '/viewDetailed';
   static const String publisherView = '/PublisherViewDetails';
   static const String staffManage = '/staffManage';
+  static const String forgetPassword = '/forgetPassword';
   static const String books = '/books';
 }

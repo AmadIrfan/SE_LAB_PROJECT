@@ -183,6 +183,27 @@ class _LoginState extends State<Login> {
                                 'email': _user['email'].toString(),
                               };
                             }),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                    context, RouteName.forgetPassword);
+                              },
+                              child: const Text(
+                                'Forgot Password?',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                  fontFamily: 'Inter',
+                                  fontWeight: FontWeight.w600,
+                                  height: 0,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         SizedBox(
                           height: size.height * 0.027,
                         ),

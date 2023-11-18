@@ -1,7 +1,10 @@
 import 'package:admin_app/res/routes/route_name.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../data/firebase_methods.dart';
 import '../models/publisher_model.dart';
+import '../utils/utils.dart';
 
 class PublisherCard extends StatelessWidget {
   const PublisherCard({super.key, required this.pModel});
@@ -10,6 +13,8 @@ class PublisherCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final updateStatus = Provider.of<FireBaseMethods>(context, listen: false);
+
     return Card(
       color: const Color(0xFFD9D9D9),
       child: ListTile(
@@ -51,11 +56,17 @@ class PublisherCard extends StatelessWidget {
         ),
         trailing: PopupMenuButton(
           itemBuilder: (context) => [
-            const PopupMenuItem(
-              child: Text('edit'),
-            ),
-            const PopupMenuItem(
-              child: Text('In Active'),
+            PopupMenuItem(
+              child: Text(bool.parse(pModel.active.toString())
+                  ? 'In Active'
+                  : 'Active'),
+              onTap: () async {
+                await updateStatus.updateStatusActive('publisher',
+                    bool.parse(pModel.active.toString()), pModel.id.toString());
+                Utils().showToast(bool.parse(pModel.active.toString())
+                    ? 'publisher InActivate'
+                    : 'publisher Activate');
+              },
             ),
           ],
         ),

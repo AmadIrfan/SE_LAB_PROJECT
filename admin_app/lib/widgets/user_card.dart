@@ -15,57 +15,61 @@ class UserCard extends StatelessWidget {
     return Card(
       color: const Color(0xFFD9D9D9),
       child: ListTile(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              RouteName.viewDetailed,
-              arguments: userModel,
-            );
-          },
-          leading: CircleAvatar(
-            radius: 30,
-            backgroundColor: const Color(0xFFFFD88D),
-            child: userModel.profileImage.toString().isEmpty
-                ? const SizedBox()
-                : Image.network(
-                    userModel.profileImage.toString(),
-                  ),
+        onTap: () {
+          Navigator.pushNamed(
+            context,
+            RouteName.viewDetailed,
+            arguments: userModel,
+          );
+        },
+        leading: CircleAvatar(
+          radius: 30,
+          backgroundColor: const Color(0xFFFFD88D),
+          child: userModel.profileImage.toString().isEmpty
+              ? const SizedBox()
+              : Image.network(
+                  userModel.profileImage.toString(),
+                ),
+        ),
+        title: Text(
+          userModel.name.toString(),
+          style: const TextStyle(
+            color: Color(0xFF171B36),
+            fontSize: 20,
+            height: 0,
+            fontFamily: 'Inter',
+            fontWeight: FontWeight.w700,
           ),
-          title: Text(
-            userModel.name.toString(),
-            style: const TextStyle(
-              color: Color(0xFF171B36),
-              fontSize: 20,
-              height: 0,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w700,
+        ),
+        subtitle: Text(
+          userModel.email.toString(),
+          style: const TextStyle(
+            color: Color(0xFF171B36),
+            fontSize: 12,
+            fontWeight: FontWeight.w500,
+            height: 0,
+            fontFamily: 'Inter',
+          ),
+        ),
+        trailing: PopupMenuButton(
+          itemBuilder: (context) => [
+            PopupMenuItem(
+              child: Text(bool.parse(userModel.active.toString())
+                  ? 'In Active'
+                  : 'Active'),
+              onTap: () async {
+                await updateStatus.updateStatusActive(
+                    'user',
+                    bool.parse(userModel.active.toString()),
+                    userModel.id.toString());
+                Utils().showToast(bool.parse(userModel.active.toString())
+                    ? 'user InActivate'
+                    : 'user Activate');
+              },
             ),
-          ),
-          subtitle: Text(
-            userModel.email.toString(),
-            style: const TextStyle(
-              color: Color(0xFF171B36),
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
-              height: 0,
-              fontFamily: 'Inter',
-            ),
-          ),
-          trailing: PopupMenuButton(
-            itemBuilder: (context) => [
-              // const PopupMenuItem(
-              //   child: Text('edit'),
-              // ),
-              PopupMenuItem(
-                child: const Text('In Active'),
-                onTap: () async {
-                  await updateStatus.updateStatusActive(
-                      'user', userModel.id.toString());
-                  Utils().showToast('User InActive');
-                },
-              ),
-            ],
-          )),
+          ],
+        ),
+      ),
     );
   }
 }

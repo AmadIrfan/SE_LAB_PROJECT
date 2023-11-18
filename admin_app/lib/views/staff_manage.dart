@@ -1,8 +1,10 @@
+import 'package:admin_app/res/colors.dart';
 import 'package:admin_app/widgets/admins_card.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pie_chart/pie_chart.dart';
 import '../models/user_model.dart';
+import '../widgets/chart.dart';
 
 class StaffManage extends StatefulWidget {
   const StaffManage({super.key});
@@ -18,6 +20,10 @@ class _StaffManageState extends State<StaffManage> {
     "active": 3,
     "inactive": 2,
   };
+  String? filter = 'all';
+
+  Stream<QuerySnapshot<Map<String, dynamic>>> collection =
+      FirebaseFirestore.instance.collection('admin').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,63 +39,79 @@ class _StaffManageState extends State<StaffManage> {
         },
         child: Column(
           children: [
-            const Text(
-              'Statistics',
-              style: TextStyle(
-                color: Color(0xFF243465),
-                fontSize: 20,
-                fontFamily: 'Nunito Sans',
-                fontWeight: FontWeight.w700,
-                height: 0,
-                letterSpacing: 0.28,
+            Container(
+              color: darkBlueColor.withOpacity(0.3),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  FilterChip(
+                    selected: filter == 'all' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection = _firestore.collection('admin').snapshots();
+                      });
+                      filter = 'all';
+                    },
+                    label: const Text('All'),
+                  ),
+                  FilterChip(
+                    selected: filter == 'active' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection = _firestore
+                            .collection('admin')
+                            .where(
+                              'active',
+                              isEqualTo: true,
+                            )
+                            .snapshots();
+                      });
+                      filter = 'active';
+                    },
+                    label: const Text('Active'),
+                  ),
+                  FilterChip(
+                    selected: filter == 'inActive' ? true : false,
+                    onSelected: (v) {
+                      setState(() {
+                        collection = _firestore
+                            .collection('admin')
+                            .where(
+                              'active',
+                              isEqualTo: false,
+                            )
+                            .snapshots();
+                      });
+                      filter = 'inActive';
+                    },
+                    label: const Text('In Active'),
+                  ),
+                ],
               ),
             ),
-            Expanded(
-                child: PieChart(
-              dataMap: dataMap,
-              animationDuration: const Duration(milliseconds: 800),
-              chartLegendSpacing: 32,
-              chartRadius: MediaQuery.sizeOf(context).width / 2.2,
-              colorList: const [
-                Color(0xFF04BFDA),
-                Color(0xFFFFA84A),
-                Color(0xFF9B88ED)
-              ],
-              initialAngleInDegree: 0,
-              chartType: ChartType.ring,
-              ringStrokeWidth: 30,
-              legendOptions: const LegendOptions(
-                showLegendsInRow: true,
-                legendPosition: LegendPosition.bottom,
-                showLegends: true,
-                legendShape: BoxShape.circle,
-                legendTextStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              chartValuesOptions: const ChartValuesOptions(
-                showChartValueBackground: true,
-                showChartValues: true,
-                showChartValuesInPercentage: false,
-                showChartValuesOutside: false,
-                decimalPlaces: 1,
-              ),
-            )),
+            PIChart(chartName: 'Statistics', data: dataMap),
             Expanded(
               child: StreamBuilder(
-                stream: _firestore.collection('admin').snapshots(),
+                stream: collection,
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
                       child: CircularProgressIndicator.adaptive(),
                     );
                   } else {
+                    if (snapshot.data!.docs.isEmpty) {
+                      return const Center(
+                        child: Text('No document Found'),
+                      );
+                    }
+
                     return ListView.builder(
                       itemCount: snapshot.data!.docs.length,
                       itemBuilder: (BuildContext context, int index) {
                         UserModel u = UserModel.fromMap(
                           snapshot.data!.docs[index].data(),
                         );
+
                         return ADminCards(
                           userModel: u,
                         );

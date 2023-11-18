@@ -34,6 +34,17 @@ class FireBaseMethods with ChangeNotifier {
     }
   }
 
+  Future<void> forgotPassword(String email) async {
+    try {
+      print(email);
+      await _auth.sendPasswordResetEmail(
+        email: email,
+      );
+    } catch (e) {
+      rethrow;
+    }
+  }
+
   Future<void> registerPublisher(
     String name,
     String fatherName,
@@ -101,11 +112,17 @@ class FireBaseMethods with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> updateStatusActive(String table, String uid) async {
-    await _firestore.collection(table).doc(uid).update({
-      'active': true,
-    });
-
+  Future<void> updateStatusActive(
+      String table, bool currentStatus, String uid) async {
+    if (!currentStatus) {
+      await _firestore.collection(table).doc(uid).update({
+        'active': true,
+      });
+    } else {
+      await _firestore.collection(table).doc(uid).update({
+        'active': false,
+      });
+    }
     notifyListeners();
   }
 }
