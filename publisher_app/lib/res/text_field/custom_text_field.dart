@@ -10,9 +10,12 @@ class CustomTextField extends StatelessWidget {
     required this.onSave,
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
+    this.init,
   });
 // 'Enter your name '
   final String text;
+  final String? init;
+
   final FocusNode thisNode;
   final Function(String?)? onSave;
   final TextInputType? textInputType;
@@ -22,6 +25,7 @@ class CustomTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: init,
       focusNode: thisNode,
       textInputAction: textInputAction,
       keyboardType: textInputType,

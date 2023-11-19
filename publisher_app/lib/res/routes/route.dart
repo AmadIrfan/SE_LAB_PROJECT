@@ -14,34 +14,42 @@ class MyRoute {
     switch (settings.name) {
       case RouteName.home:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const MyHomePage(),
         );
       case RouteName.author:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const AuthorManage(),
         );
       case RouteName.addAuthor:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const AddAuthor(),
         );
       case RouteName.splash:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const SplashScreen(),
         );
       case RouteName.start:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const StartScreen(),
         );
       case RouteName.forgetPassword:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const ForgotPassword(),
         );
       case RouteName.login:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const Login(),
         );
       default:
         return MaterialPageRoute(
+          settings: settings,
           builder: (context) => const Scaffold(
             body: Center(
               child: Text('No Route'),

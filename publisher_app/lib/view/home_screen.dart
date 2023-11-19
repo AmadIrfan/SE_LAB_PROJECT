@@ -1,6 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import '../data/provider/user_provider.dart';
 import '../res/colors.dart';
-import '../res/routes/route_name.dart';
 import 'drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

@@ -7,7 +7,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'home_screen.dart';
 import '../data/firebase_methods.dart';
 import '../res/buttons/custom_button.dart';
-import '../res/buttons/text_button.dart';
 import '../res/routes/route_name.dart';
 import '../res/text_field/custom_text_field.dart';
 import '../res/colors.dart';

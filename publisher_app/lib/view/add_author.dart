@@ -3,7 +3,9 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:publisher_app/data/API/api_calls.dart';
 import 'package:publisher_app/data/provider/user_provider.dart';
+import 'package:publisher_app/models/author_model.dart' as am;
 
+import '../models/author_response.dart';
 import '../res/buttons/custom_button.dart';
 import '../res/colors.dart';
 import '../utils/utils.dart';
@@ -26,18 +28,17 @@ class _AddAuthorState extends State<AddAuthor> {
   final btn1Node = FocusNode();
   final btn2Node = FocusNode();
   final checkNode = FocusNode();
+  am.Data? _au = am.Data();
   Map<String, String> _author = {
     'name': '',
     'email': '',
     'dob': '',
     'gender': '',
   };
-  String? gender;
-  DateTime? dateTime;
   final TextStyle txtStyle = const TextStyle(
     fontWeight: FontWeight.w800,
   );
-
+  bool init = true;
   @override
   void dispose() {
     nameNode.dispose();
@@ -49,6 +50,24 @@ class _AddAuthorState extends State<AddAuthor> {
     checkNode.dispose();
 
     super.dispose();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (init) {
+      _au = ModalRoute.of(context)!.settings.arguments as am.Data?;
+      if (_au != null) {
+        _author = {
+          'name': _au!.name.toString(),
+          'email': _au!.email.toString(),
+          'dob': _au!.dob.toString(),
+          'gender': _au!.gender.toString(),
+        };
+      }
+      // Provider.of<Data>(context);
+      init = false;
+    }
+    super.didChangeDependencies();
   }
 
   @override
@@ -88,6 +107,7 @@ class _AddAuthorState extends State<AddAuthor> {
                 child: Column(
                   children: [
                     CustomTextField(
+                      init: _author['name'].toString(),
                       text: 'Enter publisher name ',
                       thisNode: nameNode,
                       onSubmit: (v) {
@@ -112,6 +132,7 @@ class _AddAuthorState extends State<AddAuthor> {
                       height: size.height * 0.027,
                     ),
                     CustomTextField(
+                      init: _author['email'].toString(),
                       text: 'Enter publisher Email ',
                       thisNode: emailNode,
                       textInputType: TextInputType.emailAddress,
@@ -158,14 +179,12 @@ class _AddAuthorState extends State<AddAuthor> {
                           Expanded(
                             child: InkWell(
                               onTap: () {
-                                setState(() {
-                                  gender = 'male';
-                                });
+                                setState(() {});
                                 _author = {
                                   'name': _author['name'].toString(),
                                   'email': _author['email'].toString(),
                                   'dob': _author['dob'].toString(),
-                                  'gender': gender.toString(),
+                                  'gender': 'male',
                                 };
                               },
                               child: Container(
@@ -174,7 +193,7 @@ class _AddAuthorState extends State<AddAuthor> {
                                 height: 40,
                                 margin: const EdgeInsets.all(5),
                                 decoration: BoxDecoration(
-                                  color: gender == 'male'
+                                  color: _author['gender'] == 'male'
                                       ? Colors.black
                                       : Colors.black.withOpacity(0.3),
                                   borderRadius: BorderRadius.circular(10),
@@ -193,19 +212,17 @@ class _AddAuthorState extends State<AddAuthor> {
                           Expanded(
                             child: InkWell(
                               onTap: () {
-                                setState(() {
-                                  gender = 'female';
-                                });
+                                setState(() {});
                                 _author = {
                                   'name': _author['name'].toString(),
                                   'email': _author['email'].toString(),
                                   'dob': _author['dob'].toString(),
-                                  'gender': gender.toString(),
+                                  'gender': 'female',
                                 };
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: gender == 'female'
+                                  color: _author['gender'] == 'female'
                                       ? Colors.black
                                       : Colors.black.withOpacity(0.3),
                                   borderRadius: BorderRadius.circular(10),
@@ -255,9 +272,10 @@ class _AddAuthorState extends State<AddAuthor> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(dateTime == null
+                          Text(_author['dob'] == ''
                               ? 'No date selected'
-                              : DateFormat.yMMMEd().format(dateTime!)),
+                              : DateFormat.yMMMEd().format(
+                                  DateTime.parse(_author['dob'].toString()))),
                           IconButton(
                             onPressed: () async {
                               DateTime? d = await showDatePicker(
@@ -267,11 +285,10 @@ class _AddAuthorState extends State<AddAuthor> {
                                   lastDate: DateTime(2100));
                               if (d != null) {
                                 setState(() {
-                                  dateTime = d;
                                   _author = {
                                     'name': _author['name'].toString(),
                                     'email': _author['email'].toString(),
-                                    'dob': dateTime!.toString(),
+                                    'dob': d.toString(),
                                     'gender': _author['gender'].toString(),
                                   };
                                 });
@@ -298,7 +315,7 @@ class _AddAuthorState extends State<AddAuthor> {
             CustomButton(
               isLoading: isLoading,
               focusNode: btn2Node,
-              text: 'Save',
+              text: _au == null ? 'Save' : 'Update',
               onClick: () {
                 onSave();
               },
@@ -309,33 +326,49 @@ class _AddAuthorState extends State<AddAuthor> {
     );
   }
 
-  void onSave() {
+  void onSave() async {
     UserProvider up = Provider.of<UserProvider>(context, listen: false);
     up.refreshUser();
-
     try {
       if (_key.currentState!.validate()) {
-        if (gender == null) {
+        if (_author['gender'] == '') {
           Utils().showToast('Gender is not selected');
           return;
-        } else if (dateTime == null) {
+        } else if (_author['dob'] == '') {
           Utils().showToast('Date of Birth is not selected');
           return;
+        } else {
+          setState(() {
+            isLoading = true;
+          });
+
+          _key.currentState!.save();
+          if (_au == null) {
+            await Provider.of<APICalls>(context, listen: false).registerAuthor(
+              _author['name'].toString(),
+              _author['email'].toString(),
+              _author['dob'].toString(),
+              _author['gender'].toString(),
+              up.getPublisher!.id.toString(),
+            );
+          } else {
+            AuthorResponse ar =
+                await Provider.of<APICalls>(context, listen: false)
+                    .updateAuthor(
+              _author['name'].toString(),
+              _author['email'].toString(),
+              _author['dob'].toString(),
+              _author['gender'].toString(),
+              up.getPublisher!.id.toString(),
+              _au!.active!,
+              _au!.sId!,
+            );
+            Utils().showToast(ar.message.toString());
+          }
+          setState(() {
+            isLoading = false;
+          });
         }
-        setState(() {
-          isLoading = true;
-        });
-        _key.currentState!.save();
-        Provider.of<APICalls>(context, listen: false).registerAuthor(
-          _author['name'].toString(),
-          _author['email'].toString(),
-          _author['dob'].toString(),
-          _author['gender'].toString(),
-          up.getPublisher!.id.toString(),
-        );
-        setState(() {
-          isLoading = false;
-        });
       }
     } catch (e) {
       setState(() {
