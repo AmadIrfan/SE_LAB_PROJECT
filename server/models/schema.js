@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const author = new mongoose.Schema(
 	{
@@ -6,26 +6,27 @@ const author = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
-		Email: {
+		email: {
 			type: String,
 			required: true,
+			unique: true,
 		},
 		gender: {
 			type: String,
 			required: true,
 			enum: ["male", "female"],
 		},
-		Novel: {
-			type: Array,
-			required: true,
-		},
-		Active: {
+		active: {
 			type: Boolean,
 			required: true,
 			default: true,
 		},
 		dob: {
 			type: Date,
+			required: true,
+		},
+		userID: {
+			type: String,
 			required: true,
 		},
 	},
@@ -56,4 +57,4 @@ const rating = new mongoose.Schema(
 );
 
 const authorModel = mongoose.model("authors", author);
-module.exports = { authorModel };
+module.exports = authorModel;

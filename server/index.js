@@ -1,23 +1,25 @@
-require("dotenv").config();
-var createError = require("http-errors");
 var express = require("express");
 var path = require("path");
 const cors = require("cors");
-var cookieParser = require("cookie-parser");
 var logger = require("morgan");
-
+const db = require("./utils/db/mongoDB");
+var createError = require("http-errors");
+const morgan = require("morgan");
+var cookieParser = require("cookie-parser");
+require("dotenv").config();
+const authorRoute = require("./routes/author_route");
+const bookRoute = require("./routes/bookRoute");
 var app = express();
 
-const db = require("./utils/db/mongoDB");
-const morgan = require("morgan");
+app.use(cors());
 
 app.use(morgan("dev"));
-app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-
+app.use("/author", authorRoute);
+app.use("/book", bookRoute);
 app.get("/", (req, res) => {
 	res.send("this is server");
 });

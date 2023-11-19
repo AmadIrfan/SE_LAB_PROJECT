@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import "package:provider/provider.dart";
 import 'package:firebase_core/firebase_core.dart';
+import 'package:publisher_app/data/API/api_calls.dart';
 import '../data/provider/user_provider.dart';
 
 import '../res/colors.dart';
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => UserProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => APICalls(),
         ),
       ],
       child: MaterialApp(

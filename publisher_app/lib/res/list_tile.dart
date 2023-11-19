@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import '../res/colors.dart';
 
 class AppListTile extends StatelessWidget {
-  const AppListTile({super.key, required this.title});
+  const AppListTile({super.key, required this.title, required this.onTap});
   final String title;
+  final Function() onTap;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -16,6 +17,7 @@ class AppListTile extends StatelessWidget {
         bottom: 5,
       ),
       child: ListTile(
+        onTap: () => onTap(),
         title: Text(
           title,
           style: const TextStyle(
