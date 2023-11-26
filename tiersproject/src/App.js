@@ -21,7 +21,7 @@ import BoughtProductsinCustomer from './Components/boughtProductsinCustomer';
 import AdminPayments from './Components/admingetpayments';
 import Generatereportspage from './Components/generatereportspage';
 import AdminProfilePage from './Components/adminprofile';
-import Reviewscustomer from './Components/reviewscustomer';
+// import Reviewscustomer from './Components/reviewscustomer';
 import CustomerProfilePage from './Components/customerProfile';
 
 function App() {
@@ -46,7 +46,7 @@ function App() {
           <PrivateRoute exact path="/customer/viewcart" component={CustomerCart} />
           <PrivateRoute exact path="/customer/ccare" component={CustomerCare} />
           <PrivateRoute exact path="/customer/boughtProducts" component={BoughtProductsinCustomer} />
-          <PrivateRoute exact path="/customer/reviews" component={Reviewscustomer} />
+          {/* <PrivateRoute exact path="/customer/reviews" component={Reviewscustomer} /> */}
           <PrivateRoute exact path="/customer/profile" component={CustomerProfilePage} />
 
 
