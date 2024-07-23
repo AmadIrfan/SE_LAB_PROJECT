@@ -1,9 +1,6 @@
-# 2nd Trust Ecommerce
+# 2nd Trust E-commerce
 ## Description
-A Second Trust Ecommerce application with two users, customer and admin
+A Second Trust is an e-commerce application with two users. it simpler to Daraz or OLX
+
 ## Project Technology Stack
-Web
-## Developer Name
-Subhan Anjum 
-## Course Name
-Software Engineering
+Full Stack Web (MERN)
